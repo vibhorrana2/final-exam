@@ -1,125 +1,83 @@
-# Project: persistence-service
-
-## Goal
-
-This project is here to demonstrate various topics covered in SENG8070. There
-are many branches in this project and each of them will cover a different topic.
-
-## Getting started
-
-### Requirements
-
-You will need NPM and Node installed on your local machine. It is highly
-recommended that you use a environment manager. The environment manager will
-prevent pollution of your local system.
-
-#### Quickest Way
-
-This can take some time to setup and understand how to use. For the quickest
-start, navigate to the [Download Page of Nodejs](https://nodejs.org/en/download/),
-download the correct package for your system, and install.
-
-#### Industry Standard Way
-
-##### Linux/macOs
-
-I highly recommend [NVM](https://github.com/nvm-sh/nvm).
-Read about the details on the NVM project page.
-
-###### Windows
-
-Setting up development for Windows is a little bit more complicated. There are
-three (3) pieces of technology you will most likely need:
-
-1. terminal
-2. SSH
-3. git
-
-For the terminal, I would recommend zsh or bash. Here is a tutorial on [setting
-up zsh on your Windows Machine](https://dev.to/zinox9/installing-zsh-on-windows-37em).
-
-On top of that, you will likely need to setup [SSH](https://docs.microsoft.com/en-us/windows/terminal/tutorials/ssh)
-and [git](https://git-scm.com/download/win). Please consult the documentation
-I've linked above to set those pieces of technology up.
-
-After that, the Environment Manager I recommend for Windows is [nvm-windows](https://github.com/coreybutler/nvm-windows).
-
-### Starting Development
-
-Validate that you have Node and NPM:
-
-```bash
-node -v
-```
-
-```bash
-npm -v
-```
-
-If you have them installed, you will be given the version number.
-
-Install the required dependencies:
-
-```bash
-npm install
-```
-
-Start the development environment:
-
-```bash
-npm start
-```
-
-### Tests
-
-Run tests with:
-
-```bash
-npm run test
-```
-
-#### Docker & docker-compose
-
----
-
-The [official website](https://docs.docker.com/get-docker/) contains instructions
-for all operating systems.
-
-in most cases, compose (docker-compose) comes with the Docker installation.
-However, if you're looking for a different version or troubleshooting tips, you
-can head to the [official documentation for compose](https://docs.docker.com/compose/install/).
-
-### Starting Development
-
-Validate that you have Node and NPM:
-
-```bash
-node -v
-```
-
-```bash
-npm -v
-```
-
-### Using docker compose
-
-These commands are to be ran in the docker compose directory.
-
-#### Build the Image
-
-```bash
-docker-compose build
-```
-
-#### Run the image
-
-```bash
-docker-compose up -d
-```
-
-#### Build and Run the image
-
-```bash
-docker-compose up -d --build
-```
-# final-exam
+This project is a modular TypeScript backend system designed for a Movie Production Company. It manages people involved in productions (actors, directors, and production staff), their roles, and salaries via contracts.
+Module Structure
+Each module consists of:
+A TypeScript model (.ts) representing data types
+An API handler (Api.ts) for basic routes
+A unit test (Api.test.ts) using Supertest + Jest
+An index.ts for clean exports
+ Modules
+1.  Persons
+Tracks everyone the company hires — actors, directors, and staff.
+File: persons.ts
+Fields:
+union_id: unique ID for the person
+name: name of the person
+date_of_birth: date of birth
+nationality: nationality
+biography: brief biography
+contact_info: contact information
+2.  Contracts
+Links people to productions and tracks their salaries (per movie).
+File: contracts.ts
+Fields:
+contract_id: UUID per production
+union_id: person involved
+movie_id: production ID
+salary: amount paid
+3.  Production Staff
+Defines which people are part of the staff and their job roles.
+File: productionStaff.ts
+Fields:
+union_id: person working
+role_id: role they hold (linked to Roles)
+4.  Roles
+Defines available staff roles like Editor, Camera Operator, etc.
+File: roles.ts
+Fields:
+role_id: ID of the role
+role_name: title of the role
+API Endpoints
+Example endpoints included for each module:
+Endpoint
+Method
+Description
+/api/persons
+GET
+Returns all persons
+/api/contracts
+GET
+Returns all contract data
+/api/production-staff
+GET
+Returns production staff assignments
+/api/roles
+GET
+Returns list of all roles
+Each module includes a basic mock response using Express.
+Testing
+Tests are written using Jest + Supertest
+Located in files like personsApi.test.ts, contractsApi.test.ts, etc.
+Example: GET /api/persons returns a mock list of people
+To run tests:
+ File Structure
+Here's an example of how your project directory might look:
+├── src
+│   ├── modules
+│   │   ├── persons.ts
+│   │   ├── contracts.ts
+│   │   ├── productionStaff.ts
+│   │   ├── roles.ts
+│   │   ├── personsApi.ts
+│   │   ├── contractsApi.ts
+│   │   ├── productionStaffApi.ts
+│   │   ├── rolesApi.ts
+│   │   ├── personsApi.test.ts
+│   │   ├── contractsApi.test.ts
+│   │   ├── productionStaffApi.test.ts
+│   │   ├── rolesApi.test.ts
+│   │   ├── index.ts
+│   ├── server.ts
+├── package.json
+├── tsconfig.json
+├── jest.config.js
+└── README.md
